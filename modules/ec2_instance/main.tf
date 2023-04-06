@@ -1,7 +1,13 @@
 locals {
   github_project_folder = var.is_public == "public" ? "angular" : "backend-Python"
   docker_cmd            = var.is_public == "public" ? "docker run -d -p 80:80 appweb" : "docker run -d -p 80:8080 appweb"
+  cidr_block = var.is_public == "public" ? var.out_cidr_block : "${chomp(data.http.myip.response_body)}/32"
 }
+
+data "http" "myip" {
+  url = "http://ipv4.icanhazip.com"
+}
+
 
 resource "aws_key_pair" "deployer" {
   key_name   = "aws_key-${var.is_public}"
@@ -45,7 +51,7 @@ resource "aws_security_group" "app_sec_group" {
   vpc_id = var.vpc_id
 
   egress {
-    cidr_blocks      = ["0.0.0.0/0", ]
+    cidr_blocks      = [var.out_cidr_block]
     description      = ""
     from_port        = 0
     ipv6_cidr_blocks = []
@@ -61,13 +67,13 @@ resource "aws_security_group" "app_sec_group" {
     from_port   = var.ssh_port
     to_port     = var.ssh_port
     protocol    = var.ingress_protocol
-    cidr_blocks = [var.out_cidr_block]
+    cidr_blocks = [local.cidr_block]
   }
 
   ingress {
     from_port   = var.http_port
     to_port     = var.http_port
     protocol    = var.ingress_protocol
-    cidr_blocks = [var.out_cidr_block]
+    cidr_blocks = [local.cidr_block]
   }
 }

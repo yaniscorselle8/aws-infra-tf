@@ -18,11 +18,7 @@ resource "aws_route_table" "pub_route_table" {
   route {
     cidr_block = var.out_cidr_block
     gateway_id = var.gateway_id
-  } #not for private
-}
-
-data "http" "myip" {
-  url = "http://ipv4.icanhazip.com"
+  }
 }
 
 //Create Route Table : private
@@ -32,10 +28,6 @@ resource "aws_route_table" "private_route_table" {
   tags = {
     Name = "route-table-yanis-${var.is_public}"
   }
-  route {
-    cidr_block = "${chomp(data.http.myip.response_body)}/32"
-    gateway_id = var.gateway_id
-  } 
 }
 
 //Associate Public Route Table to Subnet
