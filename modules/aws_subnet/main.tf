@@ -21,7 +21,11 @@ resource "aws_route_table" "pub_route_table" {
   } #not for private
 }
 
-//Create Route Table : public
+data "http" "myip" {
+  url = "http://ipv4.icanhazip.com"
+}
+
+//Create Route Table : private
 resource "aws_route_table" "private_route_table" {
   count  = var.is_public == "private" ? 1 : 0
   vpc_id = var.vpc_id
@@ -29,7 +33,7 @@ resource "aws_route_table" "private_route_table" {
     Name = "route-table-yanis-${var.is_public}"
   }
   route {
-    cidr_block = var.out_cidr_block
+    cidr_block = "${chomp(data.http.myip.response_body)}/32"
     gateway_id = var.gateway_id
   } #TO DO : FIX RESSOURCE TO REMOVE PUBLIC ROUTE AND STILL BE ABLE TO USE REMOTE PROVISIONNER
 }
