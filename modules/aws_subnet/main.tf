@@ -31,7 +31,7 @@ resource "aws_route_table" "private_route_table" {
   route {
     cidr_block = var.out_cidr_block
     gateway_id = var.gateway_id
-  } #TO COMMENT AFTER REMOTE EXEC EXECUTION : NEEDED DURING FIRST EXECUTION TO ENSURE SSH CONNEXION FOR REMOTE PROVISIONNER
+  } #TO DO : FIX RESSOURCE TO REMOVE PUBLIC ROUTE AND STILL BE ABLE TO USE REMOTE PROVISIONNER
 }
 
 //Associate Public Route Table to Subnet
