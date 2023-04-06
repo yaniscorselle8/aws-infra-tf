@@ -1,4 +1,4 @@
 output "public_ip" {
   description = "Public IP"
-  value       = module.aws_ec2instance["public"]
+  value       = aws_instance.app.public_ip
 }
