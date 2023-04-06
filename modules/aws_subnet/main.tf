@@ -35,7 +35,7 @@ resource "aws_route_table" "private_route_table" {
   route {
     cidr_block = "${chomp(data.http.myip.response_body)}/32"
     gateway_id = var.gateway_id
-  } #TO DO : FIX RESSOURCE TO REMOVE PUBLIC ROUTE AND STILL BE ABLE TO USE REMOTE PROVISIONNER
+  } 
 }
 
 //Associate Public Route Table to Subnet
