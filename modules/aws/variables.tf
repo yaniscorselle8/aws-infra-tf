@@ -1,13 +1,8 @@
 variable "is_public" {}
 variable "gateway_id" {}
 variable "vpc_id" {}
-
 variable "subnet_cidr_block" {}
-
-variable "instance_type_ec2" {
-  default = "t2.micro"
-}
-
+variable "aws_key_pair_name" {}
 variable "ssh_port" {
   default = "22"
 }
@@ -21,6 +16,10 @@ variable "out_cidr_block" {
 }
 variable "ingress_protocol" {
   default = "tcp"
+}
+
+variable "instance_type_ec2" {
+  default = "t2.micro"
 }
 
 variable "ubuntu_ami" {
