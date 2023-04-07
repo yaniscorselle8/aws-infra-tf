@@ -1,14 +1,11 @@
-variable "ubuntu_ami" {
-  default = "ami-00aa9d3df94c6c354"
-}
-
 variable "is_public" {}
-
+variable "gateway_id" {}
 variable "vpc_id" {}
-variable "subnet_id" {}
+
+variable "subnet_cidr_block" {}
 
 variable "instance_type_ec2" {
-  default = "t3.micro"
+  default = "t2.micro"
 }
 
 variable "ssh_port" {
@@ -25,5 +22,7 @@ variable "out_cidr_block" {
 variable "ingress_protocol" {
   default = "tcp"
 }
-variable "aws_key_pair_name" {}
-variable "security_group_id" {}
+
+variable "ubuntu_ami" {
+  default = "ami-00aa9d3df94c6c354"
+}

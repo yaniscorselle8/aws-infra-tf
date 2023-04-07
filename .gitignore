@@ -3,5 +3,5 @@ terraform.tfstate
 terraform.tfstate.backup
 .terraform
 .terraform.lock.hcl
-aws_key
+aws_key.pem
 aws_key.pub
